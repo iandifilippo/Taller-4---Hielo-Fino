@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cwo34tfl5imar" path="res://sistema_sol.gd" id="1_l7qun"]
 [ext_resource type="Script" uid="uid://bxj1v47b2mcfr" path="res://ciclo_dia.gd" id="2_fntjl"]
-[ext_resource type="Script" uid="uid://cqword78d06nt" path="res://fotometro.gd" id="3_fntjl"]
 
 [sub_resource type="Environment" id="Environment_8rylc"]
 background_mode = 1
@@ -21,7 +20,6 @@ size = Vector3(1, 2, 1)
 [node name="ZonaA" type="Node3D" unique_id=478376294]
 
 [node name="Sol" type="DirectionalLight3D" parent="." unique_id=1562659545]
-shadow_enabled = true
 directional_shadow_max_distance = 20.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=665070109]
@@ -53,12 +51,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 2)
 visible = false
 light_color = Color(0.9607843, 0.6509804, 0.13725491, 1)
 omni_range = 2.0
-
-[node name="Fotometro" type="Node" parent="." unique_id=1168496620 node_paths=PackedStringArray("sistema", "camara", "superficie")]
-process_mode = 4
-script = ExtResource("3_fntjl")
-sistema = NodePath("../SistemaSol")
-camara = NodePath("../Camera3D")
-superficie = NodePath("../Tablero")
 
 [connection signal="cambio_noche" from="SistemaSol" to="LuzHoyo" method="set_visible"]
