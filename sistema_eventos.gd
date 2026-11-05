@@ -1,0 +1,44 @@
+class_name SistemaEventos
+extends Node
+## Tarea B, niveles 2 y 3. Hace que las luces respondan al juego.
+## Escucha a todo el grupo "disparadores" sin saber qué mecánica es cada uno.
+
+@export var luz_evento: OmniLight3D
+@export var pico_destello := 4.0
+@export var k_destello := 6.0      # 1/s: qué tan rápido se apaga (a 0.5 s queda < 5 %)
+
+# Nivel 3: una luz que sigue una variable (0 a 1) del juego.
+@export var luz_variable: Light3D
+@export var color_bajo := Color(0.5, 0.8, 1.0)
+@export var color_alto := Color(1.0, 0.2, 0.2)
+@export var k_variable := 4.0
+var variable := 0.0   # volteos gastados / par (la pone el juego, o una tecla de prueba)
+
+
+func _ready() -> void:
+	for d in get_tree().get_nodes_in_group("disparadores"):
+		d.evento.connect(_on_evento)
+	luz_evento.light_energy = 0.0
+
+
+func _process(delta: float) -> void:
+	luz_evento.light_energy = decaer(luz_evento.light_energy, 0.0, k_destello, delta)
+	if luz_variable != null:
+		if Input.is_key_pressed(KEY_UP):
+			variable = minf(1.0, variable + delta * 0.5)
+		if Input.is_key_pressed(KEY_DOWN):
+			variable = maxf(0.0, variable - delta * 0.5)
+		var v := clampf(variable, 0.0, 1.0)
+		luz_variable.light_color = color_bajo.lerp(color_alto, v)
+		luz_variable.light_energy = decaer(luz_variable.light_energy, 1.0 + 3.0 * v, k_variable, delta)
+
+
+func _on_evento(posicion: Vector3) -> void:
+	luz_evento.global_position = posicion + Vector3.UP * 1.5
+	luz_evento.light_energy = pico_destello
+
+
+## Función pura: el número "actual" persigue a "base" con el alpha exponencial del Taller 2.
+static func decaer(actual: float, base: float, k: float, dt: float) -> float:
+	var alpha := CamaraSeguidora.alpha_exponencial(k, dt)
+	return actual + (base - actual) * alpha

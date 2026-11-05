@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Hielo Fino"
+config/name="Taller 4 Hielo Fino Main Tarea B (1)"
 run/main_scene="res://mundo.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
