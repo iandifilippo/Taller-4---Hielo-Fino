@@ -11,10 +11,17 @@ ambient_light_color = Color(0.09411765, 0.22352941, 0.4, 1)
 fog_enabled = true
 fog_light_color = Color(0.18039216, 0.32941177, 0.52156866, 1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_8rylc"]
+size = Vector3(7, 0.2, 7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_t06gn"]
+size = Vector3(1, 2, 1)
+
 [node name="ZonaA" type="Node3D" unique_id=478376294]
 
 [node name="Sol" type="DirectionalLight3D" parent="." unique_id=1562659545]
 shadow_enabled = true
+directional_shadow_max_distance = 20.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=665070109]
 environment = SubResource("Environment_8rylc")
@@ -26,3 +33,16 @@ entorno = NodePath("../WorldEnvironment")
 
 [node name="CicloDia" type="Node" parent="SistemaSol" unique_id=293972353]
 script = ExtResource("2_fntjl")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=132261495]
+transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 7, 10, 7)
+projection = 1
+size = 10.0
+
+[node name="Tablero" type="MeshInstance3D" parent="." unique_id=843244643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("BoxMesh_8rylc")
+
+[node name="Bloque" type="MeshInstance3D" parent="." unique_id=2127338638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -2)
+mesh = SubResource("BoxMesh_t06gn")
